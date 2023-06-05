@@ -48,13 +48,15 @@ function getStringFromNode(node: Node): string {
     return element.textContent || '';
   }
   let result = '';
-  for (const child of element.childNodes) {
-    result += getStringFromNode(child);
+  const childNames = Array.from(element.childNodes).map((node) => node.nodeName)
+  if (!childNames.includes('TIME')){
+    for (const child of element.childNodes) {
+      result += getStringFromNode(child);
+    }
   }
   if (
     element.nodeName === 'P' ||
-    element.nodeName === 'DIV' ||
-    element.nodeName === 'TIME'
+    element.nodeName === 'DIV'
   ) {
     if (result.length > 0 && !result.endsWith('\n\n')) {
       result += '\n';
